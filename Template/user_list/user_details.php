@@ -19,3 +19,7 @@
         <span><a href="mailto:<?= $this->text->e($user['email']) ?>"><?= $this->text->e($user['email']) ?></a></span>
     <?php endif ?>
 </div>
+<div class="table-list-icons">
+    <span></span>
+    <span></span>
+</div>
