@@ -13,6 +13,9 @@ class Plugin extends Base {
         // Add new entry on dropdown only if user is APP_MANAGER or APP_ADMIN
         $this->template->hook->attach('template:header:dropdown', 'Group_owners:header/dropdown');
 
+        // Override default groups dropdown for platform administrator
+        $this->template->setTemplateOverride('group/dropdown', 'Group_owners:group/admin_dropdown');
+
         // Declare new models
         $this->container['groupOwnerModel'] = $this->container->factory(function ($c) {
             return new GroupOwnerModel($c);
