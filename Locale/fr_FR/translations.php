@@ -20,4 +20,5 @@ return array(
     'Unable to remove the "group owner" role for this user from the group.' => 'Impossible de supprimer le rôle de propriétaire pour cet utilisateur dans ce groupe',
     'Unable to add group owner' => 'Impossible d\'ajouter un propriétaire de groupe',
     '"Group owner" role added successfully.' => 'Le rôle "propriétaire de groupe" a été ajouté avec succès',
+    'Add group owner' => 'Ajouter un propriétaire au groupe',
 );
