@@ -4,6 +4,7 @@ namespace Kanboard\Plugin\Group_owners\Model;
 
 use Kanboard\Core\Base;
 use Kanboard\Model\GroupMemberModel;
+use Kanboard\Model\UserModel;
 
 /**
  * Group Owner Model
@@ -119,9 +120,28 @@ class GroupOwnerModel extends Base {
      * @return boolean
      */
     public function isOwner($group_id, $user_id) {
-        return $this->db->table(self::TABLE)
+        return $this->userSession->isAdmin() || $this->db->table(self::TABLE)
             ->eq(self::TABLE.'.group_id', $group_id)
             ->eq(self::TABLE.'.user_id', $user_id)
             ->count() > 0;
+    }
+
+    /**
+     * Get all not owners
+     *
+     * @access public
+     * @param  integer $group_id
+     * @return array
+     */
+    public function getNotOwners($group_id)
+    {
+        $subquery = $this->db->table(self::TABLE)
+            ->columns('user_id')
+            ->eq('group_id', $group_id);
+
+        return $this->db->table(UserModel::TABLE)
+            ->notInSubquery('id', $subquery)
+            ->eq('is_active', 1)
+            ->findAll();
     }
 }

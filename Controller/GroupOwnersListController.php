@@ -95,6 +95,9 @@ class GroupOwnersListController extends BaseController {
         $group = $this->groupModel->getById($group_id);
         $user_id = $this->request->getIntegerParam('user_id', -1);
         $type = $this->request->getStringParam('type');
+        $isFromAdmin = $this->request->getStringParam('isFromAdmin');
+        $usersList = $this->groupMemberModel->getNotMembers($group_id);
+        $title = t('Add group member');
 
         if (empty($values)) {
             $values['group_id'] = $group_id;
@@ -105,12 +108,20 @@ class GroupOwnersListController extends BaseController {
             }
         }
 
+        if ($isFromAdmin === 'true') {
+            $values['addUserAsOwner'] = true;
+            $values['isFromAdmin'] = true;
+            $usersList = $this->groupOwnerModel->getNotOwners($group_id);
+            $title = t('Add group owner');
+        }
+
         $this->response->html($this->template->render('Group_owners:group/associate', array(
-            'users' => $this->userModel->prepareList($this->groupMemberModel->getNotMembers($group_id)),
+            'users' => $this->userModel->prepareList($usersList),
             'group' => $group,
             'errors' => $errors,
             'values' => $values,
             'type' => $type,
+            'title' => $title
         )));
     }
 
@@ -118,6 +129,9 @@ class GroupOwnersListController extends BaseController {
         $values = $this->request->getValues();
         $errors = array();
         $type = isset($values['type']) ? $values['type'] : "";
+        if (isset($values['isFromAdmin'])) {
+            $type = 'addOwnership';
+        }
 
         if (isset($values['group_id']) && isset($values['user_id'])) {
             $isOwner = $this->groupOwnerModel->isOwner($values['group_id'], $this->userSession->getId());
