@@ -11,8 +11,7 @@ PHP version 7.0 or >
 * Each group owner can add users or remove users as "member" or "owner" of the group
 
 # TODO
-- [ ] Allows group owners to update groups (e.g: update the group name)
-- [ ] Allows group owners to delete groups
+You can find what is planned here : https://github.com/Cyboulette/Group_owners/projects
 
 # Manual Installation
 - Find the release on https://github.com/Cyboulette/Group_owners/releases
