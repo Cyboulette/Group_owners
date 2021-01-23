@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h2><?= t('Add group member to "%s"', $group['name']) ?></h2>
+    <h2><?= $title . ' "' . $group['name'].'"' ?></h2>
 </div>
 
 <?php if (isset($errors['isOwner'])): ?>
@@ -9,6 +9,7 @@
 <form method="post" action="<?= $this->url->href('GroupOwnersListController', 'addUser', array('group_id' => $group['id'], 'plugin' => 'Group_owners')) ?>" autocomplete="off">
     <?= $this->form->csrf() ?>
     <?= $this->form->hidden('group_id', $values) ?>
+    <?= $this->form->hidden('isFromAdmin', $values) ?>
 
     <?php if($type === ''): ?>
         <?php if (empty($users)): ?>
