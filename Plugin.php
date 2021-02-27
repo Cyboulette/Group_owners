@@ -16,6 +16,8 @@ class Plugin extends Base {
         // Override default groups dropdown for platform administrator
         $this->template->setTemplateOverride('group/dropdown', 'Group_owners:group/admin_dropdown');
 
+        $this->template->hook->attach('template:config:sidebar', 'Group_owners:config/sidebar');
+
         // Declare new models
         $this->container['groupOwnerModel'] = $this->container->factory(function ($c) {
             return new GroupOwnerModel($c);
@@ -25,6 +27,7 @@ class Plugin extends Base {
         $this->applicationAccessMap->add('GroupOwnersListController', '*', Role::APP_MANAGER);
         $this->applicationAccessMap->add('GroupOwnersCreationController', '*', Role::APP_MANAGER);
         $this->applicationAccessMap->add('GroupOwnersModificationController', '*', Role::APP_MANAGER);
+        $this->applicationAccessMap->add('GroupOwnersConfigController', '*', Role::APP_ADMIN);
     }
 
     // Translation
