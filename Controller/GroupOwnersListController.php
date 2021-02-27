@@ -3,6 +3,7 @@
 namespace Kanboard\Plugin\Group_owners\Controller;
 
 use Kanboard\Controller\BaseController;
+use Kanboard\Core\Controller\AccessForbiddenException;
 use Kanboard\Model\GroupMemberModel;
 use Kanboard\Model\UserModel;
 use Kanboard\Plugin\Group_owners\Model\GroupOwnerModel;
@@ -57,6 +58,13 @@ class GroupOwnersListController extends BaseController {
     public function users() {
         $group_id = $this->request->getIntegerParam('group_id');
         $group = $this->groupModel->getById($group_id);
+        if ($group === null) {
+            throw new AccessForbiddenException();
+        }
+        $isOwner = $this->groupOwnerModel->isOwner($group['id'], $this->userSession->getId());
+        if (!$isOwner) {
+            throw new AccessForbiddenException();
+        }
 
         $subqueryMember = $this->db->table(GroupMemberModel::TABLE)
             ->columns(GroupMemberModel::TABLE.'.user_id')
@@ -202,5 +210,44 @@ class GroupOwnersListController extends BaseController {
         }
 
         $this->response->redirect($this->helper->url->to('GroupOwnersListController', 'users', array('group_id' => $group_id, 'plugin' => 'Group_owners')), true);
+    }
+
+    /**
+     * Confirmation dialog to remove a group
+     *
+     * @access public
+     */
+    public function confirm()
+    {
+        $group_id = $this->request->getIntegerParam('group_id');
+        $group = $this->groupModel->getById($group_id);
+
+        $this->response->html($this->template->render('Group_owners:group/remove', array(
+            'group' => $group,
+        )));
+    }
+
+    /**
+     * Remove a group
+     *
+     * @access public
+     */
+    public function remove()
+    {
+        $this->checkCSRFParam();
+        $group_id = $this->request->getIntegerParam('group_id');
+        $isOwner = $this->groupOwnerModel->isOwner($group_id, $this->userSession->getId());
+
+        if ($isOwner) {
+            if ($this->groupModel->remove($group_id)) {
+                $this->flash->success(t('Group removed successfully.'));
+            } else {
+                $this->flash->failure(t('Unable to remove this group.'));
+            }
+        } else {
+            $this->flash->failure(t('Unable to remove this group.').' '.t('You are not owner of this group.'));
+        }
+
+        $this->response->redirect($this->helper->url->to('GroupOwnersListController', 'index', array('plugin' => 'Group_owners')), false);
     }
 }

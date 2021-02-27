@@ -3,6 +3,8 @@
         <ul>
             <li><?= $this->url->icon('users', t('Manage my groups'), 'GroupOwnersListController', 'index', array('plugin' => 'Group_owners')) ?></li>
             <li><?= $this->modal->medium('plus', t('Add group member'), 'GroupOwnersListController', 'associate', array('group_id' => $group['id'], 'plugin' => 'Group_owners')) ?></li>
+            <li><?= $this->modal->medium('edit', t('Edit'), 'GroupOwnersModificationController', 'show', array('plugin' => 'Group_owners', 'group_id' => $group['id'])) ?></li>
+            <li><?= $this->modal->confirm('trash-o', t('Remove'), 'GroupOwnersListController', 'confirm', array('plugin' => 'Group_owners', 'group_id' => $group['id'])) ?></li>
         </ul>
     </div>
     <div class="margin-bottom"></div>

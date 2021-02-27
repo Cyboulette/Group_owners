@@ -24,6 +24,7 @@ class Plugin extends Base {
         // Only APP_MANAGER can create/manage their own groups
         $this->applicationAccessMap->add('GroupOwnersListController', '*', Role::APP_MANAGER);
         $this->applicationAccessMap->add('GroupOwnersCreationController', '*', Role::APP_MANAGER);
+        $this->applicationAccessMap->add('GroupOwnersModificationController', '*', Role::APP_MANAGER);
     }
 
     // Translation
