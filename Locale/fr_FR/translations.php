@@ -21,4 +21,6 @@ return array(
     'Unable to add group owner' => 'Impossible d\'ajouter un propriétaire de groupe',
     '"Group owner" role added successfully.' => 'Le rôle "propriétaire de groupe" a été ajouté avec succès',
     'Add group owner' => 'Ajouter un propriétaire au groupe',
+    'Display icon on application dropdown' => 'Afficher une icône dans le menu déroulant de l\'application',
+    'GroupOwners plugin settings' => 'Paramètres du plugin GroupOwners'
 );
