@@ -1,5 +1,5 @@
 # Group_owners
-Kanboard plugin to allows users to create and manage groups by themselves
+Kanboard plugin that allows app managers to create and manage groups by themselves
 
 # Requirements
 Kanboard v1.1.0 or Higher
