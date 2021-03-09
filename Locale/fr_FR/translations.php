@@ -18,7 +18,7 @@ return array(
     'Do you really want to remove the "group owner" role for the user "%s" from the group "%s"?' => 'Voulez vous vraiment retirer le rôle de propriétaire de l\'utilisateur "%s" dans le groupe "%s" ?',
     '"Group owner" role for this user removed successfully from this group.' => 'Le rôle de propriétaire pour cet utilisateur a été retiré avec succès de ce groupe',
     'Unable to remove the "group owner" role for this user from the group.' => 'Impossible de supprimer le rôle de propriétaire pour cet utilisateur dans ce groupe',
-    'Unable to add group owner' => 'Impossible d\'ajouter un propriétaire de groupe',
+    'Unable to add group owner.' => 'Impossible d\'ajouter le rôle de propriétaire de groupe à cet utilisateur',
     '"Group owner" role added successfully.' => 'Le rôle "propriétaire de groupe" a été ajouté avec succès',
     'Add group owner' => 'Ajouter un propriétaire au groupe',
     'Display icon on application dropdown' => 'Afficher une icône dans le menu déroulant de l\'application',
