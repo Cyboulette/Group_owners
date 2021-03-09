@@ -118,7 +118,7 @@ class GroupOwnersListController extends BaseController {
 
         if ($isFromAdmin === 'true') {
             $values['addUserAsOwner'] = true;
-            $values['isFromAdmin'] = true;
+            $values['isFromAdmin'] = 'true';
             $usersList = $this->groupOwnerModel->getNotOwners($group_id);
             $title = t('Add group owner');
         }
@@ -137,7 +137,9 @@ class GroupOwnersListController extends BaseController {
         $values = $this->request->getValues();
         $errors = array();
         $type = isset($values['type']) ? $values['type'] : "";
-        if (isset($values['isFromAdmin'])) {
+        if (isset($values['isFromAdmin']) && $values['isFromAdmin'] === "true") {
+            $type = 'addOwnership';
+        } else if (isset($values['addUserAsOwner'])) {
             $type = 'addOwnership';
         }
 
@@ -160,6 +162,7 @@ class GroupOwnersListController extends BaseController {
                         return $this->response->redirect($this->helper->url->to('GroupOwnersListController', 'users', array('group_id' => $values['group_id'], 'plugin' => 'Group_owners')), true);
                     } else {
                         $this->flash->failure(t('Unable to add group owner.'));
+                        $errors['isOwner'] = t('Unable to add group owner.');
                     }
                 }
             } else {
