@@ -2,7 +2,7 @@
 
 return array(
     'Allows users to create and manage their groups by themselves' => 'Permite que os usuários criem e gerenciem seus grupos por conta própria',
-    'Proprietário do grupo' => 'Proprietário do grupo',
+    'Group Owner' => 'Proprietário do grupo',
     'Group Member' => 'Membro do grupo',
     'You are not member or not owner of any groups.' => 'Você não é membro ou não é proprietário de nenhum grupo',
     'No groups are corresponding to your research.' => 'Nenhum grupo corresponde à sua pesquisa.',
