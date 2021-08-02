@@ -58,6 +58,7 @@ class GroupOwnersListController extends BaseController {
     public function users() {
         $group_id = $this->request->getIntegerParam('group_id');
         $group = $this->groupModel->getById($group_id);
+        $search = $this->request->getStringParam('search', '');
         if ($group === null) {
             throw new AccessForbiddenException();
         }
@@ -79,6 +80,14 @@ class GroupOwnersListController extends BaseController {
             ->inSubquery(UserModel::TABLE.'.id', $subqueryOwner)
             ->closeOr();
 
+        if ($search != '' && !empty($search)) {
+            $query->beginOr()
+                ->ilike('username', '%' . $search . '%')
+                ->ilike('name', '%' . $search . '%')
+                ->ilike('email', '%' . $search . '%')
+                ->closeOr();
+        }
+
         $paginator = $this->paginator
             ->setUrl('GroupOwnersListController', 'users', array('group_id' => $group_id, 'plugin' => 'Group_owners'))
             ->setMax(30)
@@ -89,12 +98,17 @@ class GroupOwnersListController extends BaseController {
         $ownersIds = $this->groupOwnerModel->getOwnersIds($group_id);
         $membersIds = $this->groupOwnerModel->getMembersIds($group_id);
 
+        // Using $values to re-store search value
+        $values = array();
+        $values['search'] = $search;
+
         $this->response->html($this->helper->layout->app('Group_owners:group/users', array(
             'title' => t('Members of %s', $group['name']).' ('.$paginator->getTotal().')',
             'paginator' => $paginator,
             'group' => $group,
             'ownersIds' => $ownersIds,
             'membersIds' => $membersIds,
+            'values' => $values
         )));
     }
 
