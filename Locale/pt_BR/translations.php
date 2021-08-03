@@ -22,5 +22,6 @@ return array(
     '"Group owner" role added successfully.' => 'Função de "proprietário do grupo" adicionada com sucesso',
     'Add group owner' => 'Adicionar proprietário de grupo',
     'Display icon on application dropdown' => 'Exibir ícone na lista suspensa do aplicativo',
-    'GroupOwners plugin settings' => 'Configurações do plugin GrupOwners'
+    'GroupOwners plugin settings' => 'Configurações do plugin GrupOwners',
+    'There is no user in this group matching the search.' => 'Não há nenhum usuário nesse grupo que corresponde à essa pesquisa.'
 );
