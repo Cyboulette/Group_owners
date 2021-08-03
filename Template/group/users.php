@@ -7,9 +7,21 @@
             <li><?= $this->modal->confirm('trash-o', t('Remove'), 'GroupOwnersListController', 'confirm', array('plugin' => 'Group_owners', 'group_id' => $group['id'])) ?></li>
         </ul>
     </div>
-    <div class="margin-bottom"></div>
+    <div class="margin-bottom">
+        <form method="get" action="<?= $this->url->dir() ?>" class="search">
+            <?= $this->form->hidden('controller', array('controller' => 'GroupOwnersListController')) ?>
+            <?= $this->form->hidden('action', array('action' => 'users')) ?>
+            <?= $this->form->hidden('plugin', array('plugin' => 'Group_owners')) ?>
+            <?= $this->form->hidden('group_id', array('group_id' => $group['id'])) ?>
+            <?= $this->form->text('search', $values, array(), array('placeholder="'.t('Search').'"')) ?>
+        </form>
+    </div>
     <?php if ($paginator->isEmpty()): ?>
-        <p class="alert"><?= t('There is no user in this group.') ?></p>
+        <?php if(isset($values['search']) && !empty($values['search'])): ?>
+            <p class="alert"><?= t('There is no user in this group matching the search.') ?></p>
+        <?php else: ?>
+            <p class="alert"><?= t('There is no user in this group.') ?></p>
+        <?php endif; ?>
     <?php else: ?>
         <div class="table-list">
             <?= $this->render('user_list/header', array('paginator' => $paginator)) ?>
@@ -30,7 +42,11 @@
                                 $user['avatar_path'],
                                 'avatar-inline'
                             ) ?>
-                            <?= $this->text->e($user['name'] ?: $user['username']) ?>
+                            <?php if ($this->user->isAdmin()): ?>
+                                <?= $this->url->link($this->text->e($user['name'] ?: $user['username']), 'UserViewController', 'show', array('user_id' => $user['id'])) ?>
+                            <?php else: ?>
+                                <?= $this->text->e($user['name'] ?: $user['username']) ?>
+                            <?php endif; ?>
                         </span>
                     </div>
 
